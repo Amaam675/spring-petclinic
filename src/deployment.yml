@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spring-application
+spec:
+  selector:
+    matchLabels:
+      app: pod1
+  replicas: 5
+  template:
+    metadata:
+      labels:
+        app: pod1
+    spec:
+      containers:
+        - name: spring
+          image: amaan129/java:v1
+          resources:
+            requests:
+              cpu: 200m
+              memory: 250Mi
+            limits:
+              cpu: 200m
+              memory: 250Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+   name: myservice
+spec:
+  selector:
+     app: pod1
+  ports:
+     - port: 8080
+       targetPort: 8080
+       type: NodePort
